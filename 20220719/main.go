@@ -6,33 +6,15 @@ import (
 )
 
 func generate(numRows int) [][]int {
-	var triangle [][]int
-	for i := 0; i < numRows; i++ {
-		if i == 0 {
-			triangle = append(triangle, []int{1})
-			continue
-		}
-		if i == 1 {
-			triangle = append(triangle, []int{1, 1})
-			continue
-		}
-
-		triangle = append(triangle, []int{})
-
-		for j := 0; j <= i; j++ {
-			if j == 0 {
-				triangle[i] = append(triangle[i], 1)
-				continue
-			}
-			if j == i {
-				triangle[i] = append(triangle[i], 1)
-				continue
-			}
-
-			triangle[i] = append(triangle[i], triangle[i-1][j-1]+triangle[i-1][j])
+	ans := make([][]int, numRows)
+	for i := range ans {
+		ans[i] = make([]int, i+1)
+		ans[i][0], ans[i][i] = 1, 1 // 首尾固定1
+		for j := 1; j < i; j++ {
+			ans[i][j] = ans[i-1][j-1] + ans[i-1][j]
 		}
 	}
-	return triangle
+	return ans
 }
 
 func main() {
